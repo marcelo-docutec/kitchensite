@@ -1,6 +1,11 @@
 import { foodData } from '../../../data/data.foods';
 import { foodTypes } from './types';
 
+/**
+ * get all food with contains name
+ * @param {string} name
+ */
+
 export const getByName = name => {
   const result = foodData.filter(f => {
     f.description.contains(name);
@@ -10,6 +15,10 @@ export const getByName = name => {
     payload: result,
   };
 };
+
+/**
+ * get all foods
+ */
 
 export const getAll = () => {
   return {
