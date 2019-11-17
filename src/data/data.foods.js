@@ -1,14 +1,14 @@
 export const foodData = [
   {
-    description: 'asdasdasd',
+    description: 'Geronimo',
     image: 'food.jpg',
   },
   {
-    description: 'asdagsd',
+    description: 'Sergio',
     image: 'food2.jpg',
   },
   {
-    description: 'astdasd',
+    description: 'Marecelo',
     image: 'food3.jpg',
   },
 ];
