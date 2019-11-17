@@ -20,7 +20,7 @@ const Home = () => {
   return (
     <DivStyled>
       {food.map((v, k) => (
-        <Food key={k} image={v.image} description={v.description} />
+        <Food key={k} image={v.image + '.jpeg'} description={v.description} />
       ))}
     </DivStyled>
   );
