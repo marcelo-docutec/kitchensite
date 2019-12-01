@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
@@ -16,6 +15,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { Search, SearchIconContainer, SearchInputBase } from './styles';
+import SearchIcon from '@material-ui/icons/Search';
+import { useDispatch } from 'react-redux';
+import { actions } from 'core/store/food';
 
 const drawerWidth = 240;
 
@@ -24,12 +27,14 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
   },
   drawer: {
+    background: theme.colors.primary,
     [theme.breakpoints.up('sm')]: {
       width: drawerWidth,
       flexShrink: 0,
     },
   },
   appBar: {
+    background: theme.colors.primary,
     [theme.breakpoints.up('sm')]: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
@@ -56,9 +61,18 @@ const ResponsiveDrawer = props => {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const dispatch = useDispatch();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleChange = name => {
+    if (name === '') {
+      dispatch(actions.getAll());
+    } else {
+      dispatch(actions.getByName(name));
+    }
   };
 
   const drawer = (
@@ -66,7 +80,7 @@ const ResponsiveDrawer = props => {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        {['Inicio', 'Galeria', 'Acerca de nosotros'].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
@@ -90,13 +104,15 @@ const ResponsiveDrawer = props => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Listado de comidas
-          </Typography>
+          <Search>
+            <SearchIconContainer>
+              <SearchIcon />
+            </SearchIconContainer>
+            <SearchInputBase onChange={({ target }) => handleChange(target.value)} placeholder="Buscar" />
+          </Search>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
           <Drawer
             container={container}
